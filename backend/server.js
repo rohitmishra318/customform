@@ -11,16 +11,10 @@ const formRoutes = require('./routes/formRoutes');
 const app = express();
 
 // --- CORRECTED CORS CONFIGURATION ---
-// Define the list of websites that are allowed to connect to your backend
-const allowedOrigins = [
-  'http://localhost:5173', // Your local frontend for testing
-  'https://customform-cqlk.vercel.app' // Your live frontend on Vercel
-];
-
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests from the whitelist
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+    // This logic allows your local machine, and any subdomain of vercel.app
+    if (!origin || origin.startsWith('http://localhost') || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -29,7 +23,7 @@ const corsOptions = {
 };
 
 // Middleware
-app.use(cors(corsOptions)); // Use the new CORS options
+app.use(cors(corsOptions)); // Use the new, more flexible CORS options
 app.use(express.json()); // Allows parsing of JSON in request bodies
 
 // Connect to MongoDB
