@@ -64,7 +64,7 @@ const FormBuilder = () => {
         }
         try {
             const formStructure = { title, headerImage, questions };
-            const response = await axios.post('http://localhost:5000/api/forms', formStructure);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/forms`, formStructure);
             const link = `${window.location.origin}/form/${response.data._id}`;
             setSavedFormLink(link);
         } catch (error) {

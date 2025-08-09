@@ -21,7 +21,7 @@ const FormFiller = () => {
     useEffect(() => {
         const fetchForm = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/forms/${formId}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/forms/${formId}`);
                 setForm(response.data);
                 console.log("Form Data Received:", response.data); 
             } catch (err) {
@@ -43,7 +43,7 @@ const FormFiller = () => {
                 questionId,
                 answer,
             }));
-            await axios.post(`http://localhost:5000/api/forms/${formId}/responses`, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/forms/${formId}/responses`, {
                 answers: formattedAnswers,
             });
             setIsSubmitted(true);
